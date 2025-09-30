@@ -10,7 +10,7 @@ Cryptographically Verified Three-Tier Dispute Resolution System
 
 ## Live Demo
 
-Visit [https://www.crypto-adr.trinos.group/](https://www.crypto-adr.trinos.group/)
+Visit [https://crypto-adr.trinos.group/](https://crypto-adr.trinos.group/)
 
 ## Local Development
 ```bash
