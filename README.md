@@ -10,7 +10,7 @@ Cryptographically Verified Three-Tier Dispute Resolution System
 
 ## Live Demo
 
-Visit [https://verbose-adventure-7e5oe4m.pages.github.io/](https://verbose-adventure-7e5oe4m.pages.github.io/)
+Visit [https://www.crypto-adr.trinos.group/](https://www.crypto-adr.trinos.group/)
 
 ## Local Development
 ```bash
