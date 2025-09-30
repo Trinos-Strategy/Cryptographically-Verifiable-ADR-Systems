@@ -10,7 +10,7 @@ Cryptographically Verified Three-Tier Dispute Resolution System
 
 ## Live Demo
 
-Visit [https://yourusername.github.io/Cryptographically-Verifiable-ADR-Systems/](https://yourusername.github.io/Cryptographically-Verifiable-ADR-Systems/)
+Visit [https://verbose-adventure-7e5oe4m.pages.github.io/](https://verbose-adventure-7e5oe4m.pages.github.io/)
 
 ## Local Development
 ```bash
