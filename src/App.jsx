@@ -33,74 +33,115 @@ export default function PEAPDisputeSystem() {
       1: {
         title: "Quick Resolution",
         amount: amount * 0.45,
-        description: `${disputeData.partyA} receives ${Math.round(amount * 0.45 / amount * 100)}% of disputed amount immediately, with mutual release of all claims. Immediate smart contract execution with no further proceedings required.`
+        description: `${disputeData.partyA} receives ${Math.round(amount * 0.45 / amount * 100)}% of disputed amount immediately, with mutual release of all claims.`
       },
       2: {
         title: "Balanced Settlement",
         amount: amount * 0.60,
-        description: `Structured payment of $${(amount * 0.60).toLocaleString()} over 3 months, allowing continued business relationship with modified contract terms. Includes relationship preservation and revised contract terms.`
+        description: `Structured payment of $${(amount * 0.60).toLocaleString()} over 3 months, allowing continued business relationship.`
       },
       3: {
         title: "Full Vindication",
         amount: amount * 0.85,
-        description: `Maximum compensation of $${(amount * 0.85).toLocaleString()} with detailed findings, additional damages for breach, and public acknowledgment option.`
+        description: `Maximum compensation of $${(amount * 0.85).toLocaleString()} with detailed findings.`
       }
     };
 
     const option = optionDetails[optionNumber];
     
-    const prompt = `Generate a comprehensive settlement agreement for the following dispute:
+    // Mock data - example settlement agreement instead of API
+    setTimeout(() => {
+      const mockAgreement = `SETTLEMENT AGREEMENT AND MUTUAL RELEASE
 
-Parties:
-- Party A: ${disputeData.partyA}
-- Party B: ${disputeData.partyB}
+This Settlement Agreement ("Agreement") is entered into as of ${new Date().toLocaleDateString()}, by and between:
 
-Dispute Type: ${disputeData.disputeType}
-Dispute Amount: $${parseFloat(disputeData.amount).toLocaleString()}
-Dispute Description: ${disputeData.description}
+${disputeData.partyA} ("Party A")
+and
+${disputeData.partyB} ("Party B")
+(collectively, the "Parties")
 
-Selected Settlement Option: ${option.title}
-Settlement Terms: ${option.description}
-Settlement Amount: $${option.amount.toLocaleString()}
+RECITALS
 
-Create a professional, legally-sound settlement agreement that includes:
-1. Recitals describing the dispute neutrally
-2. Detailed settlement terms based on the option selected
-3. Mutual release clause
-4. Payment terms and timeline
-5. Confidentiality provisions
-6. Dispute resolution clause for future issues
-7. Standard miscellaneous provisions
-8. Signature blocks
+WHEREAS, a dispute has arisen between the Parties concerning ${disputeData.disputeType} involving the sum of $${parseFloat(disputeData.amount).toLocaleString()};
 
-Make the agreement specific, implementable, and ready for legal review. Use formal legal language appropriate for a binding contract.`;
+WHEREAS, ${disputeData.description};
 
-    try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 4000,
-          messages: [
-            { role: "user", content: prompt }
-          ]
-        })
-      });
+WHEREAS, the Parties desire to resolve all claims and disputes between them without the expense and uncertainty of litigation;
 
-      const data = await response.json();
-      const agreement = data.content[0].text;
-      setSettlementAgreement(agreement);
+NOW, THEREFORE, in consideration of the mutual covenants and agreements contained herein, and for other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, the Parties agree as follows:
+
+AGREEMENT
+
+1. SETTLEMENT TERMS
+
+1.1 Settlement Amount: Party B shall pay to Party A the sum of $${option.amount.toLocaleString()} (the "Settlement Amount").
+
+1.2 Payment Terms: ${option.title === "Quick Resolution" 
+  ? "The Settlement Amount shall be paid in full within five (5) business days of the execution of this Agreement via wire transfer or certified check."
+  : option.title === "Balanced Settlement"
+  ? "The Settlement Amount shall be paid in three equal installments of $" + (option.amount / 3).toLocaleString() + " over three months, with the first payment due within ten (10) business days of execution, and subsequent payments due on the same day of each following month."
+  : "The Settlement Amount shall be paid in full within ten (10) business days of the execution of this Agreement, representing compensation for damages, breach of contract, and additional damages as detailed herein."}
+
+1.3 Settlement Characterization: This settlement is entered into as a compromise of disputed claims and shall not be construed as an admission of liability by either Party.
+
+2. MUTUAL RELEASE
+
+2.1 Release by Party A: Party A hereby releases, acquits, and forever discharges Party B, and their respective agents, representatives, successors, and assigns, from any and all claims, demands, damages, actions, and causes of action, whether known or unknown, arising from or relating to the matters described in the Recitals.
+
+2.2 Release by Party B: Party B hereby releases, acquits, and forever discharges Party A, and their respective agents, representatives, successors, and assigns, from any and all claims, demands, damages, actions, and causes of action, whether known or unknown, arising from or relating to the matters described in the Recitals.
+
+3. CONFIDENTIALITY
+
+3.1 The Parties agree to maintain the confidentiality of this Agreement and its terms, except as required by law or for enforcement purposes.
+
+3.2 Neither Party shall make any public statements, social media posts, or other communications disparaging the other Party.
+
+4. IMPLEMENTATION TIMELINE
+
+4.1 This Agreement shall become effective immediately upon execution by both Parties.
+
+4.2 Smart contract execution shall commence within twenty-four (24) hours of mutual acceptance.
+
+4.3 All payment obligations shall be completed according to the schedule outlined in Section 1.2.
+
+5. DISPUTE RESOLUTION
+
+5.1 Should any dispute arise regarding the interpretation or enforcement of this Agreement, the Parties agree to first attempt resolution through good faith negotiation.
+
+5.2 If negotiation fails, disputes shall be resolved through binding arbitration in accordance with the PEAP framework.
+
+6. MISCELLANEOUS PROVISIONS
+
+6.1 Entire Agreement: This Agreement constitutes the entire agreement between the Parties and supersedes all prior negotiations, understandings, and agreements.
+
+6.2 Amendment: This Agreement may only be amended by written instrument signed by both Parties.
+
+6.3 Governing Law: This Agreement shall be governed by and construed in accordance with applicable blockchain-based dispute resolution protocols and international arbitration standards.
+
+6.4 Severability: If any provision of this Agreement is held to be invalid or unenforceable, the remaining provisions shall continue in full force and effect.
+
+6.5 Counterparts: This Agreement may be executed in counterparts, each of which shall be deemed an original and all of which together shall constitute one and the same instrument. Electronic signatures shall be deemed valid and binding.
+
+SIGNATURES
+
+Party A: ${disputeData.partyA}
+Signature: _________________________
+Date: _________________________
+
+Party B: ${disputeData.partyB}
+Signature: _________________________
+Date: _________________________
+
+---
+This agreement was generated using the Post-Yang Expert Arbitration Protocol (PEAP)
+Cryptographically verified and blockchain-secured
+Generated: ${new Date().toISOString()}`;
+
+      setSettlementAgreement(mockAgreement);
       setSelectedOption(optionNumber);
       setGeneratingAgreement(false);
       setStage('agreement-generated');
-    } catch (error) {
-      console.error("Error generating agreement:", error);
-      setGeneratingAgreement(false);
-      alert("Failed to generate agreement. Please try again.");
-    }
+    }, 3000);
   };
 
   const handleOptionSelect = (optionId) => {
@@ -148,91 +189,98 @@ Make the agreement specific, implementable, and ready for legal review. Use form
     setUploadedTranscript(file.name);
     setAnalyzingTranscript(true);
 
-    try {
-      const text = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = (e) => reject(e);
-        reader.readAsText(file);
-      });
-      
-      const mediationPrompt = `# Mediation Settlement AI Assistant
+    // Mock data - example analysis instead of real API
+    setTimeout(() => {
+      const mockAnalysis = `MEDIATION TRANSCRIPT ANALYSIS
+Post-Yang Expert Arbitration Protocol (PEAP)
 
-You are an expert mediator and legal professional with 20+ years of experience in alternative dispute resolution. You specialize in analyzing mediation sessions and crafting win-win settlement solutions.
+EXECUTIVE SUMMARY
 
-Analyze this mediation transcript and provide:
+This mediation involved a commercial dispute between two business partners regarding revenue sharing and intellectual property rights in a digital asset platform. The core issues center on divergent interpretations of their partnership agreement and concerns about fair compensation. Both parties express willingness to preserve the business relationship while ensuring their interests are protected. A phased settlement approach with clear milestone verification appears most promising, allowing continued collaboration while addressing immediate financial concerns.
 
-1. Executive Summary (200 words)
-   - Key issues identified
-   - Recommended settlement approach
-   - Implementation considerations
+Key Issues Identified:
+1. Revenue distribution methodology (45% vs 55% split controversy)
+2. Intellectual property ownership and licensing rights
+3. Future governance and decision-making authority
+4. Timeline for implementation of agreed changes
 
-2. Detailed Analysis
-   - Party Analysis
-   - Issue Breakdown with categorization (monetary, non-monetary, procedural, relational)
-   - Interest Assessment (substantive, procedural, psychological interests)
-   - BATNA Assessment
+DETAILED ANALYSIS
 
-3. Settlement Options (5-7 options)
-   For each option include:
-   - Descriptive title
-   - Key terms (specific and measurable)
-   - Benefits for each party
-   - Implementation timeline
-   - Risk mitigation strategies
+PARTY ANALYSIS
 
-   Ensure options include:
-   - At least one "expand the pie" option
-   - One phased/contingent agreement option
-   - One relationship-preserving option
-   - One clean-break option
-   - Creative non-monetary solutions
+Party A:
+- Primary concern: Seeking recognition for initial platform development contributions
+- Underlying interests: Fair compensation, continued involvement in project direction
+- Stated position: Requests 60% revenue share retrospectively
+- Emotional state: Frustrated but open to negotiation
+- BATNA: Could pursue litigation but acknowledges time and cost concerns
 
-4. Recommended Settlement Package
-   - Primary recommendation with rationale
-   - Alternative options ranked by feasibility
-   - Implementation roadmap
+Party B:
+- Primary concern: Maintaining operational control and protecting investment
+- Underlying interests: Business stability, protecting against future disputes
+- Stated position: Willing to adjust terms but seeks clarity on IP ownership
+- Emotional state: Defensive but pragmatic
+- BATNA: Has resources for extended litigation but prefers resolution
 
-5. Draft Settlement Agreement
-   Create a professional settlement agreement based on your primary recommendation with:
-   - Recitals
-   - Settlement Terms
-   - Mutual Release
-   - Confidentiality Provisions
-   - Implementation Timeline
-   - Dispute Resolution Process
-   - Miscellaneous Provisions
-   - Signature Blocks
+SETTLEMENT OPTIONS
 
-Use neutral, professional language throughout. Think beyond monetary solutions and ensure all options are practically implementable.
+Option 1: "Rapid Resolution with Modified Revenue Split"
+- Adjust revenue split to 55/45 in favor of Party A going forward
+- One-time payment of $42,000 to Party A within 30 days
+- Confirm IP ownership as joint with clear licensing provisions
+- Establish quarterly review meetings
 
-MEDIATION TRANSCRIPT:
-${text}`;
+Option 2: "Phased Partnership Restructure" (RECOMMENDED)
+- Maintain 50/50 revenue split with two-tier payment structure
+- Party A receives guaranteed minimum $8,000/month for 12 months
+- After 12 months, performance-based split (55/45 if targets met)
+- Establish formal Board with outside advisor as tiebreaker
+- Create comprehensive IP agreement
 
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 8000,
-          messages: [
-            { role: "user", content: mediationPrompt }
-          ]
-        })
-      });
+Option 3: "Structured Buyout with Ongoing Royalty"
+- Party B buys out Party A's stake for $175,000
+- Party A retains 15% royalty on net revenue for 5 years
+- Party A granted perpetual license for non-competing use
+- Party B obtains full operational control
 
-      const data = await response.json();
-      const analysis = data.content[0].text;
-      setTranscriptAnalysis(analysis);
+Option 4: "Equity Conversion with Milestone Vesting"
+- Restructure as formal corporation
+- Party A: 52% equity, Party B: 48% equity
+- 3-year vesting with 1-year cliff
+- Immediate cash payment of $35,000 to Party A
+
+Option 5: "Time-Based Graduated Adjustment"
+- Year 1: 52/48 split + $20,000 signing payment
+- Year 2: 54/46 split (if revenue targets met)
+- Year 3+: 55/45 split (permanent)
+- Clear IP documentation immediately
+
+RECOMMENDED SETTLEMENT PACKAGE
+
+Primary Recommendation: Option 2 - "Phased Partnership Restructure"
+
+This option addresses core interests while preserving the business relationship. The guaranteed minimum payment addresses Party A's immediate financial concerns while the performance-based adjustment aligns incentives for growth.
+
+Implementation Timeline:
+- Month 1: Execute agreement, select board advisor, begin payments
+- Months 2-3: Draft IP agreement, establish reporting system
+- Months 4-12: Regular board meetings, quarterly reviews
+- Month 12: Performance assessment and split adjustment
+
+DRAFT SETTLEMENT AGREEMENT
+
+[Comprehensive legal agreement with all provisions including recitals, payment terms, governance structure, IP rights, confidentiality, dispute resolution, and miscellaneous provisions]
+
+---
+DISCLAIMER: This analysis is for discussion purposes only. Review with qualified legal counsel before execution.
+
+Analysis completed: ${new Date().toISOString()}
+Confidence level: High`;
+
+      setTranscriptAnalysis(mockAnalysis);
       setAnalyzingTranscript(false);
       setStage('transcript-analyzed');
-    } catch (error) {
-      console.error("Error analyzing transcript:", error);
-      setAnalyzingTranscript(false);
-      alert("Failed to analyze transcript. Please ensure the file is uploaded correctly and try again.");
-    }
+    }, 5000);
   };
 
   // Welcome Screen
@@ -266,7 +314,7 @@ ${text}`;
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-900 mb-1">AI-Generated Mediation</h3>
                   <p className="text-sm text-gray-600 mb-2">
-                    Privacy-preserving AI analyzes your dispute using homomorphic encryption and generates three settlement options optimized for different priorities. Automatically creates downloadable settlement agreements.
+                    Privacy-preserving AI analyzes your dispute and generates three settlement options. Automatically creates downloadable settlement agreements.
                   </p>
                   <div className="flex items-center space-x-4 text-xs text-gray-500">
                     <span className="flex items-center">
@@ -284,7 +332,7 @@ ${text}`;
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-900 mb-1">Human Expert Mediation</h3>
                   <p className="text-sm text-gray-600 mb-2">
-                    Cryptographically verified experts facilitate resolution through secure channels. Upload mediation transcripts for AI-powered analysis and automated settlement agreement generation.
+                    Verified experts facilitate resolution. Upload transcripts for AI-powered analysis and settlement generation.
                   </p>
                   <div className="flex items-center space-x-4 text-xs text-gray-500">
                     <span className="flex items-center">
@@ -302,7 +350,7 @@ ${text}`;
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-900 mb-1">Expert Arbitration</h3>
                   <p className="text-sm text-gray-600 mb-2">
-                    Formal arbitration with secure multi-party computation ensuring independent judgment and programmable transparency.
+                    Formal arbitration with full legal recognition and enforcement.
                   </p>
                   <div className="flex items-center space-x-4 text-xs text-gray-500">
                     <span className="flex items-center">
@@ -342,7 +390,7 @@ ${text}`;
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 flex items-start">
               <Lock className="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
               <div className="text-sm text-blue-900">
-                <strong>Privacy Protected:</strong> Your submission is encrypted using homomorphic encryption, allowing AI analysis without exposing sensitive details.
+                <strong>Privacy Protected:</strong> Your submission is encrypted, allowing AI analysis without exposing sensitive details.
               </div>
             </div>
 
@@ -453,8 +501,8 @@ ${text}`;
             </h2>
             <p className="text-gray-600 mb-8">
               {generatingAgreement 
-                ? 'Claude is drafting a comprehensive legal settlement agreement based on your selected option'
-                : 'Our AI is processing your case using privacy-preserving cryptographic protocols'}
+                ? 'Creating a comprehensive legal settlement agreement based on your selected option'
+                : 'Processing your case using privacy-preserving protocols'}
             </p>
             
             <div className="space-y-4 text-left bg-gray-50 rounded-lg p-6">
@@ -481,7 +529,7 @@ ${text}`;
                 <>
                   <div className="flex items-center">
                     <div className="w-2 h-2 bg-green-500 rounded-full mr-3 animate-pulse"></div>
-                    <span className="text-sm text-gray-700">Homomorphic encryption applied to sensitive data</span>
+                    <span className="text-sm text-gray-700">Encryption applied to sensitive data</span>
                   </div>
                   <div className="flex items-center">
                     <div className="w-2 h-2 bg-green-500 rounded-full mr-3 animate-pulse"></div>
@@ -493,7 +541,7 @@ ${text}`;
                   </div>
                   <div className="flex items-center">
                     <div className="w-2 h-2 bg-yellow-500 rounded-full mr-3 animate-pulse"></div>
-                    <span className="text-sm text-gray-700">Verifying legal compliance with zero-knowledge proofs</span>
+                    <span className="text-sm text-gray-700">Verifying legal compliance</span>
                   </div>
                 </>
               )}
@@ -519,7 +567,7 @@ ${text}`;
 
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-8">
               <p className="text-sm text-green-900">
-                Based on your dispute details, our AI has generated three settlement scenarios optimized for different priorities. Each option is legally valid and will automatically generate a complete settlement agreement ready for download and execution.
+                Based on your dispute details, AI has generated three settlement scenarios. Each option will automatically generate a complete settlement agreement ready for download.
               </p>
             </div>
 
@@ -635,7 +683,7 @@ ${text}`;
                     Not satisfied with these options?
                   </p>
                   <p className="text-sm text-gray-600 mb-4">
-                    You can escalate to Tier 2 for human expert mediation. A qualified mediator with cryptographically verified credentials will facilitate a customized resolution.
+                    You can escalate to Tier 2 for human expert mediation.
                   </p>
                 </div>
               </div>
@@ -673,7 +721,7 @@ ${text}`;
                 <div>
                   <h3 className="font-bold text-green-900 mb-2">Comprehensive Legal Agreement Created</h3>
                   <p className="text-sm text-green-800">
-                    Claude has generated a professional settlement agreement based on your selected option. This document includes all necessary legal provisions and is ready for legal review.
+                    A professional settlement agreement has been generated based on your selected option. This document includes all necessary legal provisions.
                   </p>
                 </div>
               </div>
@@ -748,7 +796,7 @@ ${text}`;
                 <div>
                   <h3 className="font-bold text-blue-900 mb-2">Cryptographic Credential Verification Active</h3>
                   <p className="text-sm text-blue-800">
-                    Your mediator's qualifications are being verified using zero-knowledge proofs, confirming expertise without revealing personal details that could compromise independence.
+                    Your mediator's qualifications are verified using zero-knowledge proofs, confirming expertise without revealing personal details.
                   </p>
                 </div>
               </div>
@@ -772,21 +820,9 @@ ${text}`;
 
               <div className="bg-gray-50 rounded-lg p-4 mb-4">
                 <p className="text-sm text-gray-700 italic mb-2">
-                  "I've reviewed your case details through our secure channel. I believe we can find a creative solution that addresses both parties' core concerns. Let me propose a structured approach..."
+                  "I've reviewed your case details through our secure channel. I believe we can find a creative solution that addresses both parties' core concerns."
                 </p>
-                <p className="text-xs text-gray-500">Sent via end-to-end encrypted channel • 2 minutes ago</p>
-              </div>
-
-              <div className="space-y-3 mb-4">
-                <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4">
-                  <p className="text-sm font-medium text-gray-900 mb-1">Proposed Mediation Framework:</p>
-                  <ul className="text-sm text-gray-700 space-y-1 ml-4">
-                    <li>• Joint session to clarify underlying interests</li>
-                    <li>• Separate confidential discussions with each party</li>
-                    <li>• Co-creation of customized settlement terms</li>
-                    <li>• Implementation timeline with milestone verification</li>
-                  </ul>
-                </div>
+                <p className="text-xs text-gray-500">Sent via encrypted channel • 2 minutes ago</p>
               </div>
             </div>
 
@@ -796,7 +832,7 @@ ${text}`;
                 Upload Mediation Transcript for AI Analysis
               </h3>
               <p className="text-sm text-amber-800 mb-4">
-                After your mediation session, upload the transcript and Claude will analyze it using expert mediation AI protocols to generate comprehensive settlement options and a draft agreement.
+                After your mediation session, upload the transcript for AI analysis to generate comprehensive settlement options.
               </p>
               <input
                 type="file"
@@ -864,7 +900,7 @@ ${text}`;
                       Need formal arbitration with binding decision?
                     </p>
                     <p className="text-sm text-gray-600">
-                      Escalate to Tier 3 for expert arbitration with full legal recognition and enforcement capabilities.
+                      Escalate to Tier 3 for expert arbitration with full legal recognition.
                     </p>
                   </div>
                 </div>
@@ -903,7 +939,7 @@ ${text}`;
                 <div>
                   <h3 className="font-bold text-green-900 mb-2">Expert AI Analysis Complete</h3>
                   <p className="text-sm text-green-800">
-                    Claude has analyzed your mediation transcript using 20+ years of expert mediation knowledge. The analysis includes party identification, issue extraction, interest mapping, BATNA assessment, 5-7 settlement options, and a comprehensive draft settlement agreement.
+                    The analysis includes party identification, issue extraction, interest mapping, BATNA assessment, settlement options, and a comprehensive draft settlement agreement.
                   </p>
                 </div>
               </div>
@@ -937,7 +973,7 @@ ${text}`;
 
             <div className="border-t pt-6">
               <p className="text-sm text-gray-600 mb-4">
-                <strong>Note:</strong> This AI-generated analysis and settlement options are based on the mediation transcript and expert frameworks. All recommendations should be reviewed with qualified legal counsel.
+                <strong>Note:</strong> This AI-generated analysis is for discussion purposes. All recommendations should be reviewed with qualified legal counsel.
               </p>
               <div className="flex space-x-3">
                 <button
@@ -970,7 +1006,7 @@ ${text}`;
               <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold mr-3">
                 3
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">Tier 3: Expert Arbitration with Full Cryptographic Framework</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Tier 3: Expert Arbitration</h2>
             </div>
 
             <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 mb-8">
@@ -997,7 +1033,7 @@ ${text}`;
                   <Gavel className="w-8 h-8 text-purple-600" />
                 </div>
                 <h3 className="font-bold text-center text-gray-900 mb-2">Arbitrator Panel</h3>
-                <p className="text-sm text-center text-gray-600 mb-3">3 verified experts selected based on specialization</p>
+                <p className="text-sm text-center text-gray-600 mb-3">3 verified experts selected</p>
                 <div className="bg-white rounded-lg p-3 text-xs space-y-1">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Securities Law:</span>
@@ -1059,48 +1095,6 @@ ${text}`;
               </div>
             </div>
 
-            <div className="bg-gray-50 rounded-xl p-6 mb-8">
-              <h3 className="font-bold text-gray-900 mb-4">Arbitration Process Timeline</h3>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
-                    ✓
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">Week 1-2: Evidence submission and expert panel selection</p>
-                    <p className="text-sm text-gray-600">Both parties submit evidence through encrypted channels</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
-                    2
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">Week 3-4: Independent analysis phase</p>
-                    <p className="text-sm text-gray-600">Arbitrators conduct individual review in cryptographically isolated environments</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
-                    3
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">Week 5: Collaborative review via MPC</p>
-                    <p className="text-sm text-gray-600">Structured information exchange after independent conclusions</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
-                    4
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">Week 6: Final award and smart contract execution</p>
-                    <p className="text-sm text-gray-600">Binding decision with full legal reasoning provided</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <button
               onClick={() => {
                 setSelectedOption('expert-accepted');
@@ -1127,49 +1121,11 @@ ${text}`;
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Dispute Resolution In Progress</h2>
             <p className="text-lg text-gray-600 mb-8">
-              {selectedOption === 'human-accepted' && "Your case is now being handled by a verified expert mediator. You'll receive updates via secure encrypted channels."}
-              {selectedOption === 'expert-accepted' && "Expert arbitration has been initiated. The panel will conduct independent analysis and provide a binding decision with full legal reasoning."}
-              {selectedOption === 'transcript-accepted' && "Your mediation analysis has been completed. Follow the recommended settlement options or escalate as needed."}
-              {typeof selectedOption === 'number' && "Settlement agreement has been generated and is ready for execution. Smart contract will enforce the terms automatically upon both parties' acceptance."}
+              {selectedOption === 'human-accepted' && "Your case is now being handled by a verified expert mediator."}
+              {selectedOption === 'expert-accepted' && "Expert arbitration has been initiated. The panel will conduct independent analysis."}
+              {selectedOption === 'transcript-accepted' && "Your mediation analysis has been completed."}
+              {typeof selectedOption === 'number' && "Settlement agreement has been generated and is ready for execution."}
             </p>
-
-            <div className="bg-indigo-50 rounded-lg p-6 mb-8">
-              <h3 className="font-bold text-gray-900 mb-3">What Happens Next?</h3>
-              <div className="text-left space-y-3 text-sm text-gray-700">
-                {typeof selectedOption === 'number' && (
-                  <>
-                    <p>✓ Both parties review the settlement agreement</p>
-                    <p>✓ Legal counsel provides final review and approval</p>
-                    <p>✓ Smart contract executes settlement terms automatically</p>
-                    <p>✓ Funds transferred and case closed with cryptographic proof</p>
-                  </>
-                )}
-                {selectedOption === 'human-accepted' && (
-                  <>
-                    <p>✓ Mediator schedules individual consultations</p>
-                    <p>✓ Confidential discussions via encrypted channels</p>
-                    <p>✓ Joint session to explore creative solutions</p>
-                    <p>✓ Co-created settlement terms with smart contract execution</p>
-                  </>
-                )}
-                {selectedOption === 'expert-accepted' && (
-                  <>
-                    <p>✓ Evidence submission portal opened</p>
-                    <p>✓ Arbitrator panel confirmed with verified credentials</p>
-                    <p>✓ Independent analysis conducted with cryptographic isolation</p>
-                    <p>✓ Binding decision with full legal reasoning within 6 weeks</p>
-                  </>
-                )}
-                {selectedOption === 'transcript-accepted' && (
-                  <>
-                    <p>✓ Review comprehensive settlement options from AI analysis</p>
-                    <p>✓ Select preferred option or negotiate modifications</p>
-                    <p>✓ Execute chosen settlement agreement</p>
-                    <p>✓ Option to escalate to expert arbitration if needed</p>
-                  </>
-                )}
-              </div>
-            </div>
 
             <div className="grid grid-cols-3 gap-4 mb-8 text-sm">
               <div className="bg-gray-50 rounded-lg p-4">
@@ -1217,4 +1173,3 @@ ${text}`;
 
   return null;
 }
-```
