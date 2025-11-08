@@ -1,4 +1,4 @@
-# PEAP - Post-Yang Expert Arbitration Protocol
+# GTDR - Graduated – Three-Tier – Dispute – Resolution
 
 Cryptographically Verified Three-Tier Dispute Resolution System
 
@@ -10,7 +10,7 @@ Cryptographically Verified Three-Tier Dispute Resolution System
 
 ## Live Demo
 
-Visit [https://crypto-adr.trinos.group/](https://crypto-adr.trinos.group/)
+Visit [https://gtdr.trinos.group/](https://gtdr.trinos.group/)
 
 ## Local Development
 ```bash
