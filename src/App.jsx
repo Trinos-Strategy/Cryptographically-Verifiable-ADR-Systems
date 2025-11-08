@@ -304,7 +304,7 @@ Confidence level: High`;
           </div>
 
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">How PEAP Works</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">How GTDR Works</h2>
             
             <div className="space-y-6">
               <div className="flex items-start space-x-4 p-4 bg-yellow-50 rounded-lg">
