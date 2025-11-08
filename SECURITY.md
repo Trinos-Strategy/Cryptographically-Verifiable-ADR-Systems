@@ -19,7 +19,7 @@ If you discover a vulnerability or cryptographic weakness, please **do not open 
 Instead, contact our security team privately.
 
 **Contact channels:**
-- 📧 security@trinos.group  
+- 📧 dk@trinos.group  
 - 🔐 PGP Key (optional): [https://trinos.group/pgp-key](https://trinos.group/pgp-key)  
 - 🧩 Report via GitHub’s private security advisory system: [Submit report](../../security/advisories/new)
 
