@@ -133,7 +133,7 @@ Signature: _________________________
 Date: _________________________
 
 ---
-This agreement was generated using the Post-Yang Expert Arbitration Protocol (PEAP)
+This agreement was generated using the GTDR (Graduated Three-Tier Dispute Resolution) system (PEAP)
 Cryptographically verified and blockchain-secured
 Generated: ${new Date().toISOString()}`;
 
@@ -192,7 +192,7 @@ Generated: ${new Date().toISOString()}`;
     // Mock data - example analysis instead of real API
     setTimeout(() => {
       const mockAnalysis = `MEDIATION TRANSCRIPT ANALYSIS
-Post-Yang Expert Arbitration Protocol (PEAP)
+GTDR (Graduated Three-Tier Dispute Resolution) system (PEAP)
 
 EXECUTIVE SUMMARY
 
@@ -293,7 +293,7 @@ Confidence level: High`;
               <Shield className="w-12 h-12 text-indigo-600" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Post-Yang Expert Arbitration Protocol
+              GTDR (Graduated Three-Tier Dispute Resolution) system
             </h1>
             <p className="text-xl text-gray-600 mb-2">
               Cryptographically Verified Three-Tier Dispute Resolution
